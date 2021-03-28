@@ -1,11 +1,12 @@
-import React, {useContext} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import Home from '../Home';
-import {Button} from 'react-native';
-import {AuthContext} from '../hooks/AuthContext';
+import React, { useContext } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from '../pages/Home';
+import { AuthContext } from '../hooks/AuthContext';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function DashboardStack() {
-  const {auth, setAuth} = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const Stack = createStackNavigator();
 
   return (
@@ -23,11 +24,9 @@ export default function DashboardStack() {
             fontWeight: 'bold',
           },
           headerRight: () => (
-            <Button
-              onPress={() => setAuth({...auth, signed: false})}
-              title="Sair"
-              color="#fff"
-            />
+            <TouchableOpacity onPress={logout}>
+              <Icon name={'logout'} size={22} color={'#FFF'} />
+            </TouchableOpacity>
           ),
         }}
       />

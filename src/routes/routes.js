@@ -1,25 +1,15 @@
-import React, {useContext} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import SignIn from '../SignIn';
+import React, { useContext } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import DashboardStack from './DashboardStack';
-import {AuthContext} from '../hooks/AuthContext';
+import { AuthContext } from '../hooks/AuthContext';
+import AppStack from './AppStack';
 
 export default function Routes() {
-  const Stack = createStackNavigator();
-  const {auth} = useContext(AuthContext);
-
-  const signed = auth.signed;
+  const { signed } = useContext(AuthContext);
 
   return (
     <NavigationContainer>
-      {signed ? (
-        <DashboardStack />
-      ) : (
-        <Stack.Navigator>
-          <Stack.Screen name="SignIn" component={SignIn} />
-        </Stack.Navigator>
-      )}
+      {signed ? <DashboardStack /> : <AppStack />}
     </NavigationContainer>
   );
 }
