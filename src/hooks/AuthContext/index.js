@@ -8,7 +8,7 @@ export const Auth = ({ children }) => {
     signed: false,
     token: null,
     loading: false,
-    error: true,
+    error: false,
   };
 
   const [auth, setAuth] = useState(INITIAL_STATE);
