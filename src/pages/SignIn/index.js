@@ -1,35 +1,45 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { KeyboardAvoidingView, StatusBar } from 'react-native';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import {
-  Button,
-  ButtonText,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StatusBar,
+  Keyboard
+} from 'react-native';
+import {
   Container,
   ForgotPasswordContainer,
   ForgotPasswordText,
-  Input,
   Logo,
 } from './styles';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
 import { AuthContext } from '../../hooks/AuthContext';
 import LogoImg from '../../assets/logo.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { showMessage } from 'react-native-flash-message';
 
-export default function Login() {
+export default function Login({ navigation }) {
   const { signIn, loading, error } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const passwordInputRef = useRef();
 
   useEffect(() => {
     if (error) {
       showMessage({
-        message: 'Oppís! Login ou senha inválidos',
+        message: 'Login ou senha inválidas',
+        description:
+          'Verifique se seu cpf, e-mail ou senha foram digitados corretamente.',
         type: 'danger',
         icon: 'warning',
+        duration: 6000,
       });
     }
   }, [error]);
 
   const handleLogin = () => {
+    Keyboard.dismiss();
     signIn({
       login: username,
       password: password,
@@ -37,37 +47,56 @@ export default function Login() {
   };
 
   return (
-    <Container>
-      <StatusBar barStyle="light-content" backgroundColor="#FFF" />
-      <KeyboardAvoidingView behavior={'padding'} enabled>
-        <Logo source={LogoImg} resizeMode={'contain'} />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      enabled>
+      <ScrollView
+        keyboardShouldPersistTaps={'handled'}
+        contentContainerStyle={{ flex: 1 }}>
+        <Container>
+          <StatusBar barStyle="light-content" backgroundColor="#FFF" />
+          <Logo source={LogoImg} resizeMode={'contain'} />
 
-        <Input
-          placeholder={'Digite seu e-mail ou cpf'}
-          autoCompleteType="off"
-          autoCapitalize={'none'}
-          value={username}
-          onChangeText={text => setUsername(text)}
-        />
+          <Input
+            placeholder={'Digite seu e-mail ou cpf'}
+            autoCompleteType="off"
+            autoCapitalize={'none'}
+            keyboardType={'email-address'}
+            value={username}
+            onChangeText={text => setUsername(text)}
+            returnKeyType={'next'}
+            onSubmitEditing={() => {
+              passwordInputRef?.current?.focus();
+            }}
+          />
 
-        <Input
-          placeholder={'Digite sua senha'}
-          secureTextEntry
-          autoCompleteType="off"
-          autoCapitalize={'none'}
-          value={password}
-          onChangeText={text => setPassword(text)}
-        />
+          <Input
+            ref={passwordInputRef}
+            placeholder={'Digite sua senha'}
+            secureTextEntry
+            autoCompleteType="off"
+            autoCapitalize={'none'}
+            value={password}
+            onChangeText={text => setPassword(text)}
+            returnKeyType={'send'}
+            onSubmitEditing={handleLogin}
+          />
 
-        <Button primary disabled={loading} onPress={handleLogin}>
-          <Icon name={'login'} size={20} color={'#FFF'} />
-          <ButtonText> Acessar sua conta</ButtonText>
-        </Button>
+          <Button
+            title={'Acessar sua conta'}
+            primary
+            disabled={loading}
+            onPress={handleLogin}
+            icon={<Icon name={'login'} size={20} color={'#FFF'} />}
+          />
 
-        <ForgotPasswordContainer>
-          <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
-        </ForgotPasswordContainer>
-      </KeyboardAvoidingView>
-    </Container>
+          <ForgotPasswordContainer
+            onPress={() => navigation.navigate('ForgotPassword')}>
+            <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
+          </ForgotPasswordContainer>
+        </Container>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
