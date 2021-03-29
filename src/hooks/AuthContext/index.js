@@ -1,9 +1,10 @@
-import React, { useState, createContext } from 'react';
+import React, { createContext, useCallback, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../services/api';
 
 export const AuthContext = createContext();
 
-export const Auth = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const INITIAL_STATE = {
     signed: false,
     token: null,
@@ -12,45 +13,69 @@ export const Auth = ({ children }) => {
   };
 
   const [auth, setAuth] = useState(INITIAL_STATE);
+  const [loadingAuth, setLoadingAuth] = useState(true);
 
-  const startLoading = status => {
-    setAuth({ ...auth, loading: status });
-  };
+  useEffect(() => {
+    const getStorage = async () => {
+      const token = await AsyncStorage.getItem('@evaluationApp:token');
+      const signed = await AsyncStorage.getItem('@evaluationApp:signed');
 
-  const isAuthenticated = ({ token }) => {
-    if (token) {
-      startLoading(false);
-      setAuth({
-        ...auth,
-        ...{
-          signed: true,
+      if (token && signed) {
+        setAuth({
           token: token,
+          signed: signed,
+          loading: false,
           error: false,
-        },
-      });
-    }
-  };
+        });
+      }
+      setLoadingAuth(false);
+    };
 
-  const signIn = async ({ login, password }) => {
-    try {
-      startLoading(true);
-      const body = {
-        username: login,
-        password: password,
-      };
+    getStorage();
+  }, [auth]);
 
-      const { data } = await api.post('/authentication', body);
+  const signIn = useCallback(
+    async ({ login, password }) => {
+      try {
+        setAuth({ ...auth, loading: true });
+        const body = {
+          username: login,
+          password: password,
+        };
 
-      isAuthenticated(data);
-    } catch (e) {
-      setAuth({
-        ...auth,
-        error: true,
-      });
-    }
-  };
+        const { data } = await api.post('/authentication', body);
 
-  const logout = () => {
+        if (data.token) {
+          setAuth({ ...auth, loading: false });
+
+          await AsyncStorage.setItem('@evaluationApp:token', data.token);
+          await AsyncStorage.setItem('@evaluationApp:signed', 'true');
+
+          setAuth({
+            ...auth,
+            ...{
+              signed: true,
+              token: data.token,
+              error: false,
+            },
+          });
+        }
+      } catch (e) {
+        setAuth({
+          ...auth,
+          error: true,
+        });
+      }
+    },
+    [auth],
+  );
+
+  const logout = async () => {
+    await AsyncStorage.multiRemove([
+      '@evaluationApp:token',
+      '@evaluationApp:signed',
+    ]);
+
     setAuth({ ...auth, signed: false });
   };
 
@@ -58,7 +83,15 @@ export const Auth = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ error, signed, loading, token, signIn, logout, auth }}>
+      value={{
+        error,
+        signed,
+        loading,
+        token,
+        signIn,
+        logout,
+        loadingAuth,
+      }}>
       {children}
     </AuthContext.Provider>
   );
