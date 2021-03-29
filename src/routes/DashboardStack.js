@@ -15,7 +15,7 @@ export default function DashboardStack() {
         name="Home"
         component={Home}
         options={{
-          title: 'Home',
+          title: 'WorkPlace',
           headerStyle: {
             backgroundColor: '#371585',
           },

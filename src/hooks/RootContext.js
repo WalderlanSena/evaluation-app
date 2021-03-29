@@ -1,6 +1,6 @@
 import React from 'react';
-import { Auth } from './AuthContext';
+import { AuthProvider } from './AuthContext';
 
 export default function RootContext({ children }) {
-  return <Auth>{children}</Auth>;
+  return <AuthProvider>{children}</AuthProvider>;
 }
