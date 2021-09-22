@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from '../pages/Home';
 import { AuthContext } from '../hooks/AuthContext';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import WorkplaceTab from './WorkplaceTab';
 
 export default function DashboardStack() {
   const { logout } = useContext(AuthContext);
@@ -13,7 +13,7 @@ export default function DashboardStack() {
     <Stack.Navigator>
       <Stack.Screen
         name="Home"
-        component={Home}
+        component={WorkplaceTab}
         options={{
           title: 'WorkPlace',
           headerStyle: {
