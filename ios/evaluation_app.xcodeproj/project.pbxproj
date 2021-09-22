@@ -145,7 +145,6 @@
 				D7A5CBAAA221430E67FA5133 /* Pods-evaluation_app-evaluation_appTests.debug.xcconfig */,
 				8D221596310A733E1E4CF3C5 /* Pods-evaluation_app-evaluation_appTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -160,7 +159,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				52B7631A5C59DED0BB6DAF4E /* [CP] Embed Pods Frameworks */,
 				A686322B4430F172C738DE3C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -183,7 +181,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				57DB1767D0D4CB933F486228 /* [CP] Embed Pods Frameworks */,
 				461A959031A7DEF081B6FA73 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -280,40 +277,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-evaluation_app/Pods-evaluation_app-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		52B7631A5C59DED0BB6DAF4E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-evaluation_app-evaluation_appTests/Pods-evaluation_app-evaluation_appTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-evaluation_app-evaluation_appTests/Pods-evaluation_app-evaluation_appTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-evaluation_app-evaluation_appTests/Pods-evaluation_app-evaluation_appTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		57DB1767D0D4CB933F486228 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-evaluation_app/Pods-evaluation_app-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-evaluation_app/Pods-evaluation_app-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-evaluation_app/Pods-evaluation_app-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7FC1E27F81C71E2D7572925B /* [CP] Check Pods Manifest.lock */ = {
@@ -485,6 +448,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6UD4AHQNUU;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = evaluation_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -511,6 +475,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6UD4AHQNUU;
 				INFOPLIST_FILE = evaluation_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
